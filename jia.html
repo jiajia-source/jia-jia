@@ -12,88 +12,77 @@
         <input class="JIA-input" type="text" placeholder="add" />
         <div class="JIA-button" onclick="addTodo()" >ADD JIAJIA</div> 
     </div>
-    <!-- 清空了静态待办，改为从数据库动态加载 -->
     <div id="todoList"></div>
 </div>
     
 <style>
-
-    /* 透明和删除效果*/
     .completed{
-     text-decoration: line-through;  /* 所有字上画横线*/
-     opacity: 0.4; /*透明度调到0.4*/
-
+     text-decoration: line-through;
+     opacity: 0.4;
     }
-    /* del部分*/
     .del{
     color: deeppink;
     cursor: pointer;
     user-select: none;
     }
-    /* 待办部分*/
     .item{
-     display: flex;  /* 开启弹性布局：让里面的子元素像排队一样好控制 */
-     align-items: center; /* 垂直居中：子元素在盒子上下方向中间对齐 */
-     justify-content: space-between;  /* 两端对齐：子元素一个贴左、一个贴右，中间撑开 */
-     box-sizing: border-box; /* 盒子模型：padding和边框算进总宽高，不撑爆 */
-     width: 80%; /* 宽度：占爸爸宽度的80% */
-     height: 50px; /* 高度：固定50像素 */
-     margin: 8px auto;  /* 外边距：上下空8px，左右自动（实现水平居中） */
-     padding: 16px;   /* 内边距：内容与边框四面都隔开16px */
-     border-radius: 20px; /* 圆角：20像素，像药丸一样圆圆的 */
-     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 20px;   /* 阴影：颜色(灰蓝色，透明度20%) 水平偏移0 垂直往下8px 模糊扩散20px */
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     box-sizing: border-box;
+     width: 80%;
+     height: 50px;
+     margin: 8px auto;
+     padding: 16px;
+     border-radius: 20px;
+     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 20px;
      background: #fff;
     }
-    /* 搜索框蓝色部分*/
     .JIA-button{
       width: 100px;
       height: 52px;
       border-radius: 0 20px 20px 0; 
-      line-height:52px ;  /* 竖向居中【与盒子高度一致时居中】*/ 
-      text-align: center;   /* 字体居中*/
+      line-height:52px ; 
+      text-align: center;
       background: linear-gradient(to right, #ffd1dc, #faf8f3);
-      cursor: pointer;  /* 鼠标放上去的时候变成一个手指*/
-      user-select: none;   /* 用户不可选中*/
+      cursor: pointer;
+      user-select: none;
       color: deeppink;
     }
-    /* 搜索框白色部分*/
     .JIA-input{
-       margin-bottom: 20px; /* 输入框与代办的距离*/
-       padding-left: 15px; /* 输入框默认字里左边边框的距离*/
-       border: 1px solid #dfe1e5;  /* 边框大小，类型，颜色*/
-       outline: none;  /* 边框的线没有颜色*/
-       width: 60%; /* 宽高 （用百分比能更好的适应网页宽度，例如小框之后）*/
-       height: 50px; /* 高*/
-       border-radius:20px 0 0 20px ; /* 白色框左边加两个圆角，顺时针*/
+       margin-bottom: 20px;
+       padding-left: 15px;
+       border: 1px solid #dfe1e5;
+       outline: none;
+       width: 60%;
+       height: 50px;
+       border-radius:20px 0 0 20px ;
     }
     .JIA-from{
-    display: flex;  /* 让搜索框与文字并列排放*/
+    display: flex;
     margin-top: 20px; 
     margin-left: 30px;   
     }
-/* 网页背景颜色*/
    body {
   background: linear-gradient(to right, #ffd1dc, #faf8f3);     
-  min-height: 100vh;  /* 让背景至少撑满整个屏幕*/
-  margin: 0;    /* 去掉浏览器自带的留白边*/
+  min-height: 100vh;
+  margin: 0;
          }
-/* 白色框部分*/        
    .JIA-app{
-    width: 98%;  /* 盒子宽度占网页宽度的98% */
-    height: auto;  /* 改成自适应高度，内容多了能撑开 */
-    padding-top: 30px;  /* 顶部往里塞30px的空白，内容往下退 */
-    box-sizing: border-box; /* padding和边框算进总宽高里，别往外膨胀 */
-    background-color: #ffff; /* 背景白色*/
-    border-radius: 5px;   /* 四个角稍微磨圆 */
-    margin-top: 40px;   /* 离上面的元素空40px */
-    margin-left:1% ; /* 左边空1%，配合width:98%刚好剧中 */
+    width: 98%;
+    height: auto;
+    padding-top: 30px;
+    box-sizing: border-box;
+    background-color: #ffff;
+    border-radius: 5px;
+    margin-top: 40px;
+    margin-left:1% ;
     padding-bottom: 30px;
    }
-/* 标题部分 */
    .title{
-      font-size: 30px;    /* 字号：文字大小30像素 */
-      font-weight: 700;   /* 字重：700是加粗，400是正常 */
-      text-align: center; /* 文字对齐：居中显示 */
+      font-size: 30px;
+      font-weight: 700;
+      text-align: center;
    }
     .name{
      font-size: 16px;
@@ -104,16 +93,14 @@
         width: 16px;
         height: 16px;
     }
-   
 </style>
 
-<!-- 引入 Supabase 官方 JS 库 -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- 换成国内更稳定的 unpkg CDN 源 -->
+<script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
 <script>
-    // ====== 这里填你自己的信息 ======
-    // 注意：URL 填项目根地址，不要带 /rest/v1 后缀！
-    const supabaseUrl = 'https://axaklflwzrsilmzeaq.supabase.co';
+    // ====== 重新从后台复制粘贴你的密钥，不要手动输入！ ======
+    const supabaseUrl = 'https://axaklflwzrsilvmzeaqr.supabase.co';
     const supabaseKey = 'sb_publishable_-mhXxjr5SMEY1oc5oFzO4A_t7O-8OyX';
     // =================================
 
@@ -126,33 +113,34 @@
         if (e.key === 'Enter') addTodo();
     });
 
-    // 页面加载时，从数据库拉取所有待办并渲染
+    // 页面加载拉取数据
     window.onload = function() {
         fetchTodos();
     }
 
-    // 从数据库查询待办列表
+    // 查询待办
     async function fetchTodos() {
         const { data, error } = await supabase
             .from('todo_list')
             .select('*')
-            .order('created_at', { ascending: true }); // 按创建时间正序排列
+            .order('created_at', { ascending: true });
 
         if (error) {
-            console.error('加载失败:', error);
+            console.error('加载失败，错误信息：', error);
+            alert('数据库连接失败，请按F12看控制台报错');
             return;
         }
 
         renderList(data);
     }
 
-    // 渲染待办列表到页面
+    // 渲染列表
     function renderList(list) {
         todoList.innerHTML = '';
         list.forEach(item => {
             const div = document.createElement('div');
             div.className = `item ${item.completed ? 'completed' : ''}`;
-            div.dataset.id = item.id; // 保存数据库id，用于更新和删除
+            div.dataset.id = item.id;
             div.innerHTML = `
                 <div>
                     <input type="checkbox" onchange="toggleDone(this)" ${item.completed ? 'checked' : ''} />
@@ -164,7 +152,7 @@
         });
     }
 
-    // 添加待办：写入数据库
+    // 新增待办
     async function addTodo() {
         const text = input.value.trim();
         if (!text) return;
@@ -174,16 +162,16 @@
             .insert([{ content: text, completed: false }]);
 
         if (error) {
-            console.error('添加失败:', error);
+            console.error('添加失败：', error);
             return;
         }
 
         input.value = '';
         input.focus();
-        fetchTodos(); // 重新拉取最新列表
+        fetchTodos();
     }
 
-    // 勾选/取消勾选：更新数据库状态
+    // 切换完成状态
     async function toggleDone(checkbox) {
         const item = checkbox.closest('.item');
         const id = Number(item.dataset.id);
@@ -195,7 +183,7 @@
             .eq('id', id);
 
         if (error) {
-            console.error('更新失败:', error);
+            console.error('更新失败：', error);
             return;
         }
 
@@ -206,7 +194,7 @@
         }
     }
 
-    // 删除待办：从数据库删除
+    // 删除待办
     async function deleteItem(delBtn) {
         const item = delBtn.closest('.item');
         const id = Number(item.dataset.id);
@@ -217,7 +205,7 @@
             .eq('id', id);
 
         if (error) {
-            console.error('删除失败:', error);
+            console.error('删除失败：', error);
             return;
         }
 
